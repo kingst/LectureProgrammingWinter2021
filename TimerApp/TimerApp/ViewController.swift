@@ -11,10 +11,13 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var startStopButton: UIButton!
     let startStopTitles: (String, String) = ("Start", "Stop")
+    @IBOutlet weak var lapLabel: UILabel!
+    
+    var lap = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        lapLabel.text = nil
     }
 
     func toggleButtonTitle(between titles: (String, String), on button: UIButton) -> Void {
@@ -22,9 +25,14 @@ class ViewController: UIViewController {
         button.setTitle(newTitle, for: .normal)
     }
     
+    // MARK: -UI action handlers
     @IBAction func startStopButtonPress() {
         toggleButtonTitle(between: startStopTitles, on: startStopButton)
     }
     
+    @IBAction func lapButtonPress() {
+        lap += 1
+        lapLabel.text = "Current lap: \(lap)"
+    }
 }
 
