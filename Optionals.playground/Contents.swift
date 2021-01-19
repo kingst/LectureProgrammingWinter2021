@@ -55,7 +55,42 @@ func getOrElse<T>(_ value: T?, defaultValue: T) -> T {
 let dogName = getOrElse(name, defaultValue: "Bob")
 let dogName2 = name ?? "Bob"
 
-let unwrappedName = name!
+let unwrappedName = name
 
-let unwrappedName2 = optionalNone!
+func guardExample(a: String?) -> Void {
+    guard let b = a else {
+        print("none")
+        return
+    }
+    
+    print(b)
+}
 
+// use optionals for "center field" exception handling
+
+func handleNumberOfDogsApi(apiResponse: String) -> Bool {
+    guard let data = apiResponse.data(using: .utf8) else { return false }
+    
+    // [key: value]
+    // [type]
+    guard let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return false }
+    
+    guard let numberOfDogs = jsonObject["number_of_dogs"] as? Int else { return false }
+    
+    return numberOfDogs == 4
+}
+
+func getNumberOfDog(from apiResponse: String) -> Int? {
+    guard let data = apiResponse.data(using: .utf8) else { return nil }
+    
+    // [key: value]
+    // [type]
+    guard let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return nil }
+    
+    guard let numberOfDogs = jsonObject["number_of_dogs"] as? Int else { return nil }
+    
+    return numberOfDogs
+}
+
+let numberOfDogs = getNumberOfDog(from: "{\"number_of_dogs\": 4}")
+print(numberOfDogs)
