@@ -34,5 +34,15 @@ class ViewController: UIViewController {
         lap += 1
         lapLabel.text = "Current lap: \(lap)"
     }
+    
+    @IBAction func settingsButtonPress(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let settingsViewController = storyboard.instantiateViewController(withIdentifier: "settingsViewController") as? SettingsViewController else {
+            assertionFailure("couldn't find vc")
+            return
+        }
+        
+        navigationController?.pushViewController(settingsViewController, animated: true)
+    }
 }
 
