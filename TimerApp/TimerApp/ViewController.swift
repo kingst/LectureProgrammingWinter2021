@@ -42,6 +42,8 @@ class ViewController: UIViewController {
             return
         }
         
+        settingsViewController.someData = "This is my data"
+        
         navigationController?.pushViewController(settingsViewController, animated: true)
     }
 }

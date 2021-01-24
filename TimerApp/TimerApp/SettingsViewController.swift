@@ -9,6 +9,8 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
+    var someData: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
