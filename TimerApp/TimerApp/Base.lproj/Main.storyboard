@@ -90,6 +90,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="currentTimeLabel" destination="2LM-N3-Hyd" id="5bp-GJ-ime"/>
                         <outlet property="lapLabel" destination="vJJ-z7-Vf5" id="48i-vC-eI3"/>
                         <outlet property="startStopButton" destination="b1k-9L-54y" id="xKX-1B-8JP"/>
                     </connections>
@@ -105,15 +106,38 @@
                     <view key="view" contentMode="scaleToFill" id="Zka-sD-UcF">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dog to time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oD7-ho-kj6">
+                                <rect key="frame" x="20" y="108" width="94" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DhF-YL-kSL">
+                                <rect key="frame" x="20" y="137" width="388" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="GLr-6m-1Fg"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="DhF-YL-kSL" firstAttribute="leading" secondItem="GLr-6m-1Fg" secondAttribute="leading" constant="20" id="R4W-b7-WSk"/>
+                            <constraint firstItem="DhF-YL-kSL" firstAttribute="top" secondItem="oD7-ho-kj6" secondAttribute="bottom" constant="8" symbolic="YES" id="RCh-CO-HM0"/>
+                            <constraint firstItem="oD7-ho-kj6" firstAttribute="leading" secondItem="GLr-6m-1Fg" secondAttribute="leading" constant="20" id="Y0q-Ae-mZK"/>
+                            <constraint firstItem="oD7-ho-kj6" firstAttribute="top" secondItem="GLr-6m-1Fg" secondAttribute="top" constant="20" id="hFr-9m-UcP"/>
+                            <constraint firstItem="GLr-6m-1Fg" firstAttribute="trailing" secondItem="DhF-YL-kSL" secondAttribute="trailing" constant="20" id="ukd-4h-jWZ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Settings" id="NsE-b7-z6j"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="dogNameTextField" destination="DhF-YL-kSL" id="53L-AF-yaA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EkZ-AE-d2q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1863" y="84"/>
+            <point key="canvasLocation" x="1861.682242990654" y="83.585313174946009"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qb5-5L-OTz">
