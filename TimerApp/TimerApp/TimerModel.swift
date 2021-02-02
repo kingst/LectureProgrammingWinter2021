@@ -14,11 +14,22 @@ protocol TimerModelUpdates: class {
 
 class TimerModel {
     var startTime: Date?
+    var lastLap: Date?
     var laps: [TimeInterval] = []
     weak var delegate: TimerModelUpdates?
     
     func addLap() {
-        print("lap added")
+        guard let lastLapStart = lastLap ?? startTime else {
+            return
+        }
+        
+        // be careful about time intervals and the absolute time
+        let now = Date()
+        let lap = -lastLapStart.timeIntervalSince(now)
+        lastLap = now
+        
+        laps.append(lap)
+        delegate?.lapsDidChange(laps)
     }
     
     func timerNeedsUpdating() {

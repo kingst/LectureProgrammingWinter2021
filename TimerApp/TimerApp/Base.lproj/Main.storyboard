@@ -92,6 +92,7 @@
                     <connections>
                         <outlet property="currentTimeLabel" destination="2LM-N3-Hyd" id="5bp-GJ-ime"/>
                         <outlet property="lapLabel" destination="vJJ-z7-Vf5" id="48i-vC-eI3"/>
+                        <outlet property="lapsTableView" destination="J26-LI-nng" id="3bd-DE-Lvc"/>
                         <outlet property="startStopButton" destination="b1k-9L-54y" id="xKX-1B-8JP"/>
                     </connections>
                 </viewController>

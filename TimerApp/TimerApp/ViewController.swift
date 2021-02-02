@@ -7,20 +7,26 @@
 
 import UIKit
 
-class ViewController: UIViewController, TimerModelUpdates {
+class ViewController: UIViewController, TimerModelUpdates, UITableViewDataSource {
 
     @IBOutlet weak var startStopButton: UIButton!
-    let startStopTitles: (String, String) = ("Start", "Stop")
     @IBOutlet weak var lapLabel: UILabel!
-    
-    var lap = 0
     @IBOutlet weak var currentTimeLabel: UILabel!
+    @IBOutlet weak var lapsTableView: UITableView!
+    
+    let startStopTitles: (String, String) = ("Start", "Stop")
     let timerModel = TimerModel()
+    var currentLaps: [TimeInterval] = []
+    var fastestLapIndex = 0
+    var slowestLapIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         lapLabel.text = nil
         timerModel.delegate = self
+        lapsTableView.dataSource = self
+        
+        lapLabel.text = "Current lap: 1"
     }
 
     func toggleButtonTitle(between titles: (String, String), on button: UIButton) -> Void {
@@ -37,8 +43,7 @@ class ViewController: UIViewController, TimerModelUpdates {
     }
     
     @IBAction func lapButtonPress() {
-        lap += 1
-        lapLabel.text = "Current lap: \(lap)"
+        timerModel.addLap()
     }
     
     @IBAction func settingsButtonPress(_ sender: Any) {
@@ -55,7 +60,26 @@ class ViewController: UIViewController, TimerModelUpdates {
     
     // MARK: -TimerModelUpdates protocol implementation
     func lapsDidChange(_ laps: [TimeInterval]) {
-        print("new laps \(laps)")
+        currentLaps = laps.reversed()
+        
+        var fastestTime = Double.greatestFiniteMagnitude
+        var slowestTime = 0.0
+        
+        for (index, lap) in currentLaps.enumerated() {
+            if lap < fastestTime {
+                fastestLapIndex = index
+                fastestTime = lap
+            }
+            
+            if lap > slowestTime {
+                slowestLapIndex = index
+                slowestTime = lap
+            }
+        }
+        
+        let lapNumber = currentLaps.count + 1
+        lapLabel.text = "Current lap: \(lapNumber)"
+        lapsTableView.reloadData()
     }
     
     func currentTimeDidChange(_ currentTime: TimeInterval) {
@@ -65,6 +89,34 @@ class ViewController: UIViewController, TimerModelUpdates {
         let hours = timeInSeconds / (60 * 60)
         
         currentTimeLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    }
+    
+    // MARK: -UITableViewDataSource implementation
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        assert(section == 0)
+        return currentLaps.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "lapCell") ?? UITableViewCell(style: .default, reuseIdentifier: "lapCell")
+        
+        assert(indexPath.section == 0)
+        let lapNumber = currentLaps.count - indexPath.row
+        let lap = String(format: "%0.1f", currentLaps[indexPath.row])
+        
+        cell.textLabel?.text = "Lap \(lapNumber): \(lap)"
+        cell.imageView?.image = UIImage(systemName: "stopwatch")
+        
+        switch indexPath.row {
+        case fastestLapIndex:
+            cell.imageView?.tintColor = .green
+        case slowestLapIndex:
+            cell.imageView?.tintColor = .red
+        default:
+            cell.imageView?.tintColor = .lightGray
+        }
+ 
+        return cell
     }
 }
 
